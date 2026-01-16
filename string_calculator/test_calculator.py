@@ -13,3 +13,7 @@ def test_sum():
 
     with pytest.raises(ValueError):
         add("4,")
+
+def test_negative_numbers():
+    with pytest.raises(ValueError):
+        add("-4,1")
