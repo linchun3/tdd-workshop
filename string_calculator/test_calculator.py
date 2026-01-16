@@ -23,4 +23,19 @@ def test_step_3():
 def test_step_4():
     with pytest.raises(ValueError) as excinfo:
         add("1,2,")
-    assert excinfo.value.message == "separators should not appear at the conclusion"
+    assert excinfo.value.args[0] == "separators should not appear at the conclusion"
+
+    with pytest.raises(ValueError) as excinfo:
+        add("1,2\n")
+    assert excinfo.value.args[0] == "separators should not appear at the conclusion"
+
+
+def test_step_5_fail():
+    with pytest.raises(ValueError) as excinfo:
+        add("//;\n1;2?3")
+    assert excinfo.value.args[0] == "invalid mixed delimiters"
+
+
+def test_step_5_pass():
+    assert add("//;\n1;3") == 4
+    assert add("//|\n1|2|3") == 6
